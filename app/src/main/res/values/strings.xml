@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">StoryApp</string>
+
+    <string name="signup">Signup</string>
+    <string name="login">Login</string>
+    <string name="message_welcome_page">Share your exciting stories! Post your Story to capture the moment.😊</string>
+    <string name="title_welcome_page">Story App</string>
+    <string name="title_signup_page">Please complete your data 😊</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="message_login_page">Welcome back 👋 </string>
+    <string name="name">Name</string>
+    <string name="message_main_page">Welocome</string>
+    <string name="punyaAkun">"Have an Account? <b>Login</b>"</string>
+    <string name="greeting">Hello %1$s,</string>
+    <string name="logout">Lougout</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="upload_story">Upload Story</string>
+    <string name="description">Description</string>
+    <string name="image_story">Image Story</string>
+    <string name="deskripsi_login_message">Come on, fill in your data now and share your story! 😊</string>
+    <string name="btn_keluar">Lougout</string>
+    <string name="c">© BarengSaya | Fiqur</string>
+    <string name="story_image">Image</string>
+    <string name="back_button">Lougout</string>
+    <string name="user_name">Username</string>
+    <string name="deskripsi_story">Description Story</string>
+    <string name="masukkan_password_kamu">Enter your password!</string>
+    <string name="masukkan_nama_kamu">Enter your Name!</string>
+    <string name="masukkan_email_kamu">Enter your Email!</string>
+    <string name="image">Image</string>
+    <string name="galery">Galery</string>
+    <string name="camera">Camera</string>
+    <string name="upload">upload</string>
+    <string name="username">User Name</string>
+    <string name="story_description">Description</string>
+    <string name="maps">Maps</string>
+    <string name="title_activity_maps">MapsActivity</string>
+</resources>

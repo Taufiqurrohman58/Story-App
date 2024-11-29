@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">StoryApp</string>
+
+    <string name="signup">Daftar</string>
+    <string name="login">Masuk</string>
+    <string name="message_welcome_page">Bagikan cerita serumu! Posting Ceritamu untuk mengabadikan momen.😊</string>
+    <string name="title_welcome_page">Story App</string>
+    <string name="title_signup_page">Silahkan Lengkapi Data kamu 😊</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="message_login_page">Selamat Datang Kembali 👋 </string>
+    <string name="name">Nama</string>
+    <string name="message_main_page">Selamat Datang.</string>
+    <string name="punyaAkun">"Punya Akun? <b>Masuk</b>"</string>
+    <string name="greeting">Halo %1$s,</string>
+    <string name="logout">Keluar</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Beranda</string>
+    <string name="upload_story">Posting Story</string>
+    <string name="description">Deskripsi</string>
+    <string name="image_story">Gambar Story</string>
+    <string name="deskripsi_login_message">Ayo Segera Isi Datamu, dan Bagikan Ceitamu! 😊</string>
+    <string name="btn_keluar">Keluar</string>
+    <string name="c">© BarengSaya | Fiqur</string>
+    <string name="story_image">Gambar</string>
+    <string name="back_button">Kembali</string>
+    <string name="user_name">Nama Pengguna</string>
+    <string name="deskripsi_story">Deskripsi Story</string>
+    <string name="masukkan_password_kamu">Masukkan Password kamu!</string>
+    <string name="masukkan_nama_kamu">Masukkan Nama kamu!</string>
+    <string name="masukkan_email_kamu">Masukkan Email kamu!</string>
+    <string name="image">Gambar</string>
+    <string name="galery">Galeri</string>
+    <string name="camera">Kamera</string>
+    <string name="upload">Posting</string>
+    <string name="username">Nama Pengguna</string>
+    <string name="story_description">Deskripsi</string>
+    <string name="maps">Maps</string>
+</resources>
