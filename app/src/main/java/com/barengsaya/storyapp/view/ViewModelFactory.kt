@@ -8,6 +8,7 @@ import com.barengsaya.storyapp.data.Repository
 import com.barengsaya.storyapp.di.Injection
 import com.barengsaya.storyapp.view.detail.DetailViewModel
 import com.barengsaya.storyapp.view.login.LoginViewModel
+import com.barengsaya.storyapp.view.maps.MapsViewModel
 import com.barengsaya.storyapp.view.signup.SignupViewModel
 import com.barengsaya.storyapp.view.upload.UploadViewModel
 
@@ -33,6 +34,9 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.N
             }
             modelClass.isAssignableFrom(UploadViewModel::class.java) -> {
                 UploadViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(MapsViewModel::class.java)-> {
+                MapsViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

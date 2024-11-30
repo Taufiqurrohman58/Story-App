@@ -36,4 +36,6 @@
     <string name="username">Nama Pengguna</string>
     <string name="story_description">Deskripsi</string>
     <string name="maps">Maps</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="input_location">Sertakan Lokasi</string>
 </resources>

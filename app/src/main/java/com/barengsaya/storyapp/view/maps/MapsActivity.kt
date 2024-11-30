@@ -8,7 +8,9 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
@@ -23,6 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.barengsaya.storyapp.databinding.ActivityMapsBinding
+import com.barengsaya.storyapp.view.ViewModelFactory
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLngBounds
@@ -32,8 +35,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
-
-//    private val boundsBuilder = LatLngBounds.Builder()
+    private val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    private val mapsViewModel:MapsViewModel by viewModels<MapsViewModel>{
+        factory
+    }
+    private val boundsBuilder = LatLngBounds.Builder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,38 +79,50 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         getMyLocation()
         setMapStyle()
-//        addManyMarker()
+        addManyMarker()
     }
-//    data class TourismPlace(
-//        val name: String,
-//        val latitude: Double,
-//        val longitude: Double
-//    )
 
-//    private fun addManyMarker() {
-//        val tourismPlace = listOf(
-//            TourismPlace("Floating Market Lembang", -6.8168954,107.6151046),
-//            TourismPlace("The Great Asia Africa", -6.8331128,107.6048483),
-//            TourismPlace("Rabbit Town", -6.8668408,107.608081),
-//            TourismPlace("Alun-Alun Kota Bandung", -6.9218518,107.6025294),
-//            TourismPlace("Orchid Forest Cikole", -6.780725, 107.637409),
-//        )
-//        tourismPlace.forEach { tourism ->
-//            val latLng = LatLng(tourism.latitude, tourism.longitude)
-//            mMap.addMarker(MarkerOptions().position(latLng).title(tourism.name))
-//            boundsBuilder.include(latLng)
-//        }
-//
-//        val bounds: LatLngBounds = boundsBuilder.build()
-//        mMap.animateCamera(
-//            CameraUpdateFactory.newLatLngBounds(
-//                bounds,
-//                resources.displayMetrics.widthPixels,
-//                resources.displayMetrics.heightPixels,
-//                300
-//            )
-//        )
-//    }
+    private fun addManyMarker() {
+        mapsViewModel.storyLocation.observe(this) { stories ->
+            if (!stories.isNullOrEmpty()) {
+                stories.forEach { item ->
+                    val latLng = LatLng(item.lat ?: 0.0, item.lon ?: 0.0)
+                    mMap.addMarker(
+                        MarkerOptions()
+                            .position(latLng)
+                            .title(item.name)
+                            .snippet(item.description)
+                    )
+                    boundsBuilder.include(latLng)
+                }
+
+                try {
+                    val bounds: LatLngBounds = boundsBuilder.build()
+                    mMap.animateCamera(
+                        CameraUpdateFactory.newLatLngBounds(
+                            bounds,
+                            resources.displayMetrics.widthPixels,
+                            resources.displayMetrics.heightPixels,
+                            300
+                        )
+                    )
+                } catch (e: IllegalStateException) {
+                    Log.e(TAG, "No points to include in LatLngBounds: ${e.message}")
+                }
+            } else {
+                toast("No stories available to display on the map")
+            }
+        }
+
+        mapsViewModel.error.observe(this) { errorMessage ->
+            errorMessage?.let {
+                toast(it)
+            }
+        }
+    }
+    private fun toast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
     private fun vectorToBitmap(@DrawableRes id: Int, @ColorInt color: Int): BitmapDescriptor {
         val vectorDrawable = ResourcesCompat.getDrawable(resources, id, null)
@@ -155,7 +173,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    //use live template logt to create this
     companion object {
         private const val TAG = "MapsActivity"
     }

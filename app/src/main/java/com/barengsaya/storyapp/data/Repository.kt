@@ -54,16 +54,24 @@ class Repository private constructor(
     suspend fun getDetailStory(id: String): DetailResponse {
         return apiService.getDetailId("Bearer ${userPreference.getSession().first().token}", id)
     }
+    suspend fun getStoriesWithLocation(): StoryResponse {
+        val token = "Bearer ${userPreference.getSession().first().token}"
+        return apiService.getStoriesWithLocation(token)
+    }
 
-
-    suspend fun uploadStory(file: File, description: String) {
+    suspend fun uploadStory(file: File, description: String, latitude: Double?, longitude: Double?) {
         val token = userPreference.getSession().first().token
         val reducedFile = file.reduceFileImage()
         val requestFile = reducedFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val body = MultipartBody.Part.createFormData("photo", reducedFile.name, requestFile)
         val desc = description.toRequestBody("text/plain".toMediaType())
-        apiService.uploadStory("Bearer $token", body, desc)
+
+        val latitudePart = latitude?.toString()?.toRequestBody("text/plain".toMediaType())
+        val longitudePart = longitude?.toString()?.toRequestBody("text/plain".toMediaType())
+
+        apiService.uploadStory("Bearer $token", body, desc, latitudePart, longitudePart)
     }
+
 
 
     suspend fun logout() {

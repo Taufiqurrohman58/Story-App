@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -51,7 +50,6 @@
             app:layout_constraintStart_toEndOf="@+id/galeryButton"
             app:layout_constraintTop_toBottomOf="@+id/previewImageView" />
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/deskripsiInput"
             android:layout_width="0dp"
@@ -75,6 +73,18 @@
                 android:scrollbars="vertical" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Switch
+            android:id="@+id/switchLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/input_location"
+            app:layout_constraintTop_toBottomOf="@id/deskripsiInput"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/uploadButton"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
         <Button
             android:id="@+id/uploadButton"
             android:layout_width="0dp"
@@ -85,9 +95,8 @@
             android:text="@string/upload"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/deskripsiInput"
+            app:layout_constraintTop_toBottomOf="@id/switchLocation"
             app:layout_constraintVertical_bias="1.0" />
 
         <androidx.constraintlayout.widget.Guideline
