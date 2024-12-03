@@ -16,7 +16,3 @@ object Injection {
         return Repository.getInstance(pref, apiService)
     }
 }
-
-
-
-

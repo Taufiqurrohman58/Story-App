@@ -62,17 +62,24 @@ class MainActivity : AppCompatActivity() {
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
-        viewModel.stories.observe(this) { stories ->
-            adapter.updateStories(stories)
-        }
-
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             }
         }
+
+        viewModel.
+        stories.observe(this) { stories ->
+            if (stories.isNullOrEmpty()) {
+                binding.tvEmptyState.visibility = View.VISIBLE
+            } else {
+                binding.tvEmptyState.visibility = View.GONE
+                adapter.submitList( stories)
+            }
+        }
     }
+
 
     private fun setupView() {
         @Suppress("DEPRECATION")

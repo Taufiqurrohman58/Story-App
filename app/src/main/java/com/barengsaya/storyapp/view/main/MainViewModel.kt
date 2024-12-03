@@ -3,28 +3,36 @@ package com.barengsaya.storyapp.view.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.barengsaya.storyapp.data.Repository
 import com.barengsaya.storyapp.data.api.response.ListStoryItem
 import com.barengsaya.storyapp.data.pref.UserModel
 import kotlinx.coroutines.launch
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagingData
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    val stories: LiveData<List<ListStoryItem>> = liveData {
-        try {
-            _isLoading.postValue(true)
-            val response = repository.getStories()
-            emit(response.listStory)
-        } catch (e: Exception) {
-            emit(emptyList())
-        } finally {
-            _isLoading.postValue(false)
+    private val _stories = MutableLiveData<List<ListStoryItem>>()
+    val stories: LiveData<List<ListStoryItem>> get() = _stories
+
+    init {
+        fetchStories()
+    }
+    private fun fetchStories() {
+        viewModelScope.launch {
+            try {
+                _isLoading.postValue(true)
+                val response = repository.getStories()
+                _stories.postValue(response.listStory)
+            } catch (e: Exception) {
+                _stories.postValue(emptyList())
+            } finally {
+                _isLoading.postValue(false)
+            }
         }
     }
 
