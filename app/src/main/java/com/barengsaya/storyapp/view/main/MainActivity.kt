@@ -8,10 +8,12 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.barengsaya.storyapp.R
 import com.barengsaya.storyapp.databinding.ActivityMainBinding
 import com.barengsaya.storyapp.view.ViewModelFactory
+import com.barengsaya.storyapp.view.adapter.LoadingStateAdapter
 import com.barengsaya.storyapp.view.adapter.StoryAdapter
 import com.barengsaya.storyapp.view.maps.MapsActivity
 import com.barengsaya.storyapp.view.upload.UploadActivity
@@ -52,33 +54,30 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         adapter = StoryAdapter()
-
         binding.rvStories.layoutManager = LinearLayoutManager(this)
-        binding.rvStories.adapter = adapter
+        binding.rvStories.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter { adapter.retry() }
+        )
+        adapter.addLoadStateListener { loadState ->
+            binding.progressBar.visibility =
+                if (loadState.source.refresh is LoadState.Loading) View.VISIBLE else View.GONE
+        }
     }
 
-    private fun setupObservers() {
-        viewModel.isLoading.observe(this) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
 
+    private fun setupObservers() {
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
-            }
-        }
-
-        viewModel.
-        stories.observe(this) { stories ->
-            if (stories.isNullOrEmpty()) {
-                binding.tvEmptyState.visibility = View.VISIBLE
             } else {
-                binding.tvEmptyState.visibility = View.GONE
-                adapter.submitList( stories)
+                viewModel.getStoriesPaging(user.token).observe(this) { pagingData ->
+                    adapter.submitData(lifecycle, pagingData)
+                }
             }
         }
     }
+
 
 
     private fun setupView() {

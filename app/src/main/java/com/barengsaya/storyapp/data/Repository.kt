@@ -1,8 +1,14 @@
 package com.barengsaya.storyapp.data
 
+import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.barengsaya.storyapp.data.api.response.DetailResponse
 import com.barengsaya.storyapp.data.api.retrofit.ApiService
 import com.barengsaya.storyapp.data.api.response.ErrorResponse
+import com.barengsaya.storyapp.data.api.response.ListStoryItem
 import com.barengsaya.storyapp.data.api.response.LoginResponse
 import com.barengsaya.storyapp.data.api.response.RegisterResponse
 import com.barengsaya.storyapp.data.api.response.StoryResponse
@@ -47,9 +53,16 @@ class Repository private constructor(
         return apiService.login(email, password)
     }
 
-    suspend fun getStories(): StoryResponse {
-        return apiService.getStories("Bearer ${userPreference.getSession().first().token}")
+    fun getStoriesPaging(token: String): LiveData<PagingData<ListStoryItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { StoryPagingSource(apiService, token) }
+        ).liveData
     }
+
 
     suspend fun getDetailStory(id: String): DetailResponse {
         return apiService.getDetailId("Bearer ${userPreference.getSession().first().token}", id)

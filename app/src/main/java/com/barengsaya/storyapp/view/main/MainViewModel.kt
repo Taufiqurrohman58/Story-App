@@ -8,32 +8,13 @@ import com.barengsaya.storyapp.data.Repository
 import com.barengsaya.storyapp.data.api.response.ListStoryItem
 import com.barengsaya.storyapp.data.pref.UserModel
 import kotlinx.coroutines.launch
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
-
-    private val _stories = MutableLiveData<List<ListStoryItem>>()
-    val stories: LiveData<List<ListStoryItem>> get() = _stories
-
-    init {
-        fetchStories()
-    }
-    private fun fetchStories() {
-        viewModelScope.launch {
-            try {
-                _isLoading.postValue(true)
-                val response = repository.getStories()
-                _stories.postValue(response.listStory)
-            } catch (e: Exception) {
-                _stories.postValue(emptyList())
-            } finally {
-                _isLoading.postValue(false)
-            }
-        }
+    fun getStoriesPaging(token: String): LiveData<PagingData<ListStoryItem>> {
+        return repository.getStoriesPaging(token).cachedIn(viewModelScope)
     }
 
     fun getSession(): LiveData<UserModel> {
@@ -46,3 +27,4 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 }
+

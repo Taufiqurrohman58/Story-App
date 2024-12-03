@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
+import com.barengsaya.storyapp.R
 import com.google.android.material.textfield.TextInputEditText
 
 
@@ -27,7 +28,7 @@ class PasswordEditText : TextInputEditText {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 error = if (!s.isNullOrEmpty() && s.length < 8) {
-                    "Password tidak boleh kurang dari 8 karakter"
+                    context.getString(R.string.password_error)
                 } else {
                     null
                 }

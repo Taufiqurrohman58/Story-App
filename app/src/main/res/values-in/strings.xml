@@ -38,4 +38,7 @@
     <string name="maps">Maps</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="input_location">Sertakan Lokasi</string>
+    <string name="coba_lagi">Coba Lagi</string>
+    <string name="password_error">Password tidak boleh kurang dari 8 karakter</string>
+    <string name="email_error">Format email tidak valid</string>
 </resources>

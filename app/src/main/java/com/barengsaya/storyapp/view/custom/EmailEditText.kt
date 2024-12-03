@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.Patterns
+import com.barengsaya.storyapp.R
 import com.google.android.material.textfield.TextInputEditText
 
 class EmailEditText : TextInputEditText {
@@ -27,7 +28,7 @@ class EmailEditText : TextInputEditText {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 error = if (!s.isNullOrEmpty() && !isValidEmail(s.toString())) {
-                    "Format email tidak valid"
+                    context.getString(R.string.email_error)
                 } else {
                     null
                 }

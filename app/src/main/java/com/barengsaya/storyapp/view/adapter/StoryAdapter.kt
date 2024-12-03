@@ -13,13 +13,11 @@ import androidx.core.util.Pair
 import android.content.Intent
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import com.barengsaya.storyapp.R
 import com.barengsaya.storyapp.view.detail.DetailActivity
 
-
 class StoryAdapter :
-    ListAdapter<ListStoryItem, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK) {
+    PagingDataAdapter<ListStoryItem, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK) {
 
     class StoryViewHolder(private val binding: ItemStoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -30,7 +28,7 @@ class StoryAdapter :
 
             Glide.with(itemView.context)
                 .load(story.photoUrl)
-                .placeholder(R.drawable.ic_place_holder) // Tambahkan placeholder untuk image loading
+                .placeholder(R.drawable.ic_place_holder)
                 .into(binding.storyImage)
 
             itemView.setOnClickListener {
@@ -62,7 +60,7 @@ class StoryAdapter :
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
             override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
                 return oldItem.id == newItem.id
             }

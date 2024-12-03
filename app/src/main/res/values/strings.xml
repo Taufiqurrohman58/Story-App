@@ -38,4 +38,8 @@
     <string name="maps">Maps</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="input_location">Include Location</string>
+    <string name="coba_lagi">Try again</string>
+    <string name="password_error">Password must not be less than 8 characters</string>
+    <string name="email_error">Invalid email format</string>
+
 </resources>

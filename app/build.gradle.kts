@@ -78,8 +78,15 @@ dependencies {
     implementation ("androidx.room:room-runtime:2.5.2")
     ksp ("androidx.room:room-compiler:2.5.2")
     implementation ("androidx.room:room-ktx:2.5.2")
-
     implementation ("androidx.paging:paging-runtime-ktx:3.3.4")
+
+    androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("org.mockito:mockito-core:4.11.0")
+    testImplementation("org.mockito:mockito-inline:4.11.0")
 
 
 
